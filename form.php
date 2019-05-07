@@ -123,7 +123,9 @@ echo '<div class="return">'. "<br> Firstname:".  $_SESSION['firstname']."<br>".
 "Start Date:". $_SESSION['indate']."<br>".
 "End Date:". $_SESSION['outdate']."<br>".
 "Hotel Name:". $_SESSION['hotelname']."<br>".
-"Total R" . $value ."<form role='form' action=" . htmlspecialchars($_SERVER['PHP_SELF']) . " method='post'>
+"Total R" . $value ;
+
+echo "<form role='form' action=" . htmlspecialchars($_SERVER['PHP_SELF']) . " method='post'>
 <button name='confirm' type='submit'> Confirm </button></form>".'</div>';
 
 //echo "<form role='form' action=" . htmlspecialchars($_SERVER['PHP_SELF']) . " method='post'><input type='submit' name='confirm'>.'Confirm'.</form>";
@@ -142,7 +144,7 @@ $hotelname=$_SESSION['hotelname'];
 $indate=$_SESSION['indate'];
 $outdate=$_SESSION['outdate'];
 $stmt->execute();
-echo "Booking confirmed";
+echo '<div id="confirmed">'."Booking confirmed".'</div>';
 
 }
 
