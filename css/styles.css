@@ -86,6 +86,17 @@ input {
     
 }
 
+
+.duplicate{
+    border-style: solid;
+   background:rgb(195, 188, 214);
+   margin-top: 2%;
+    margin-left:0%;
+    margin-right:10%;
+    float:right;
+    
+}
+
 .return{
     border-style: solid;
    background:aquamarine;
@@ -95,6 +106,8 @@ input {
     float:right;
     
 }
+
+
 
 button{
     background:grey;

@@ -8,7 +8,7 @@ session_start();
 <!DOCTYPE html>
 <html>
 <body>
-<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/styles.css">
 <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 
@@ -72,7 +72,7 @@ if (isset($_POST['submit'])) {
    $_SESSION['indate']= $_POST['indate'];
    $_SESSION['outdate']= $_POST['outdate'];
 
-}
+
 
 //echo $_SESSION['firstname'] //."<br>".  $_SESSION['lastname'] ."<br>".  $_SESSION['hotelname'] ."<br>". $_SESSION['indate'] ."<br>". $_SESSION['outdate']."<br>";
 
@@ -96,7 +96,7 @@ $interval->format('%d');
 $daysbooked = $interval->format('%d');
 $value;
 
-switch($_SESSION['hotelname']){
+switch(isset($_SESSION['hotelname'])){
    case 'Holiday Inn':
    $value = $daysbooked * 200;
    break;
@@ -117,6 +117,21 @@ switch($_SESSION['hotelname']){
    return "ERROR!";
 }
 
+$firstname = $_POST['firstname'];
+$surname = $_POST['surname'];
+
+$result = mysqli_query($conn,"SELECT hotelname, indate, outdate, firstname, surname FROM bookings WHERE firstname='$firstname' && surname='$surname'"); 
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {    
+ echo "<div class='duplicate'> You already have a booking. <br> Firstname: ". $row['firstname'] . "<br>
+Lastname: " . $row['surname'].
+"<br> Start Date: " . $row['indate'].
+"<br> End Date: " . $row['outdate'].
+"<br> Hotel Name: " . $row['hotelname'].
+"<br>" . $interval->format('%r%a days') . "<br> Total: R " . $value ."</div>";
+    } 
+}
+
 
 echo '<div class="return">'. "<br> Firstname:".  $_SESSION['firstname']."<br>".
 "surname:".  $_SESSION['surname']."<br>".
@@ -126,11 +141,11 @@ echo '<div class="return">'. "<br> Firstname:".  $_SESSION['firstname']."<br>".
 "Total R" . $value ;
 
 echo "<form role='form' action=" . htmlspecialchars($_SERVER['PHP_SELF']) . " method='post'>
-<button name='confirm' type='submit'> Confirm </button></form>".'</div>';
+<button name='confirm' type='submit'> Confirm </button> </form>".'</div>';
 
 //echo "<form role='form' action=" . htmlspecialchars($_SERVER['PHP_SELF']) . " method='post'><input type='submit' name='confirm'>.'Confirm'.</form>";
 
-
+}
 
 if(isset($_POST['confirm'])){
 //Preparing and binding a statement
