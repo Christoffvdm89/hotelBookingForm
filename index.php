@@ -59,6 +59,19 @@ $sql = "CREATE TABLE IF NOT EXISTS bookings (
 
 $conn ->query($sql);
 
+if (isset($_GET['error']) && $_GET['error'] == 'timestamp') {
+
+   ?>
+
+<div class='panel panel-default'>
+   <h1>
+      You must select at least  1 day 
+   </h1>
+      </div>
+
+      <?php
+   }
+
 
 //echo '<br>'. $_POST['firstname'] .'<br>'. $_POST['lastname'].'<br>'.$_POST['hotelname'].'<br>'.$_POST['indate'].'<br>'. $_POST['outdate'];
 
@@ -92,6 +105,15 @@ $datetime2 = new DateTime($_SESSION['outdate']);
 $interval = $datetime1->diff($datetime2);
 
 $interval->format('%d');
+
+$checkInStamp = strtotime($_SESSION['indate']);
+        $checkOutStamp = strtotime($_SESSION['outdate']);
+        // echo $checkInStamp . '<br>';
+        // echo $checkOutStamp;
+        if ($checkInStamp - $checkOutStamp > 86400 || $checkInStamp == $checkOutStamp) {
+            header("Location: ?error=timestamp");
+            exit;
+        }
 
 $daysbooked = $interval->format('%d');
 $value;
